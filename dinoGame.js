@@ -7,8 +7,6 @@ const jumpAudio = new Audio('audio/ニュッ2.mp3')
 
 const gameBGM = new Audio('audio/情動カタルシス.mp3')
 
-const gameOverBGM = new Audio('audio/チーン1.mp3')
-
 let howManyTime = 0;
 
 
@@ -226,8 +224,9 @@ function hitCheck() {
       Math.abs(game.dino.y - enemy.y) < game.dino.height * 0.8 / 2 + enemy.height * 0.9 / 2
     ) {
       game.isGameOver = true;
-      gameOverBGM.volume = 0.45;
-      gameOverBGM.play();
+
+      gameOverSound();
+
       ctx.font = 'bold 90px serif';
       ctx.fillStyle = 'black';
       ctx.fillText(`Game Over ${howManyTime}回目`, 50, 220);
@@ -260,10 +259,18 @@ canvas.addEventListener(
       howManyTime += 1;
     } else if (game.dino.moveY === 0) {
       game.dino.moveY = -41;
+      jumpAudio.currentTime = 0;
       jumpAudio.play();
     }
   }
 );
+
+function gameOverSound() {
+  const gameOverBGM = new Audio('audio/チーン1.mp3')
+  gameOverBGM.currentTime = 0;
+  gameOverBGM.volume = 0.45;
+  gameOverBGM.play();
+}
 
 
 function playBGM() {
